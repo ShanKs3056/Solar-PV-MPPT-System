@@ -1,0 +1,33 @@
+function d = dutyCycle(Vpv, Ipv)
+%#codegen
+persistent Vpre Ppre dpre
+if isempty(dpre)
+Vpre = 10;
+Ppre = 20;
+dpre =0.3; 
+end
+
+ Ppv= Vpv*Ipv;
+ DeltaD= 0.01;
+
+if(Ppv ==Ppre) 
+    d = dpre;
+else
+
+    if(Ppv > Ppre)
+        if(Vpv > Vpre)
+            d= dpre + DeltaD;
+        else
+            d= dpre - DeltaD;
+        end
+    else
+        if(Vpv > Vpre)
+            d = dpre - DeltaD;
+        else
+            d = dpre + DeltaD;
+        end
+    end
+end
+Vpre = Vpv;
+Ppre = Ppv; 
+dpre = d;
